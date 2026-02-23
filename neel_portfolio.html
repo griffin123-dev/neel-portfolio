@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neel Juvvanapudi — Senior Data Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f2eb;
+    --accent: #e8440a;
+    --accent2: #1a4fd6;
+    --muted: #6b6560;
+    --card-bg: #ffffff;
+    --border: #e0dbd4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(245,242,235,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    letter-spacing: -0.03em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem; right: -1rem;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(6rem, 18vw, 16rem);
+    font-weight: 800;
+    color: rgba(0,0,0,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.3rem 0.75rem;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-title .accent { color: var(--accent); }
+  .hero-desc {
+    margin-top: 2rem;
+    font-size: 1.05rem; line-height: 1.7;
+    color: var(--muted); max-width: 500px;
+    font-weight: 300;
+    opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+  .hero-cta {
+    margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent); color: white;
+    padding: 0.85rem 2rem; border-radius: 3px;
+    text-decoration: none; font-weight: 500; font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,68,10,0.35); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--ink); border: 1.5px solid var(--ink);
+    padding: 0.85rem 2rem; border-radius: 3px;
+    text-decoration: none; font-weight: 500; font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+
+  .hero-right {
+    opacity: 0; animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+  .stat-card.blue::before { background: var(--accent2); }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem; font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .stat-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+  .tech-list {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 4px;
+    grid-column: span 2;
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .tech-tag {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .tech-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 6rem 4rem; }
+  .section-header { margin-bottom: 4rem; }
+  .section-tag {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-tag::after {
+    content: ''; display: inline-block;
+    width: 40px; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800; letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--ink); color: var(--paper); }
+  #about .section-tag { color: #e8a88a; }
+  #about .section-tag::after { background: #e8a88a; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 6rem;
+    align-items: start;
+  }
+  .about-bio {
+    font-size: 1.1rem; line-height: 1.85;
+    color: rgba(245,242,235,0.75);
+    font-weight: 300;
+  }
+  .about-bio strong { color: var(--paper); font-weight: 500; }
+  .cert-list { margin-top: 3rem; }
+  .cert-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(245,242,235,0.1);
+  }
+  .cert-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #e8a88a; flex-shrink: 0;
+    margin-top: 0.5rem;
+  }
+  .cert-name { font-size: 0.92rem; font-weight: 500; }
+  .timeline { display: flex; flex-direction: column; gap: 2.5rem; }
+  .tl-item {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 2rem; align-items: start;
+  }
+  .tl-date {
+    font-size: 0.78rem; font-weight: 500;
+    color: rgba(245,242,235,0.4);
+    letter-spacing: 0.05em; padding-top: 0.2rem;
+    text-align: right;
+  }
+  .tl-content {}
+  .tl-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .tl-company {
+    font-size: 0.85rem; color: #e8a88a;
+    margin-top: 0.2rem; font-weight: 500;
+  }
+  .tl-desc {
+    margin-top: 0.75rem;
+    font-size: 0.88rem; color: rgba(245,242,235,0.55);
+    line-height: 1.7; font-weight: 300;
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects {}
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    cursor: default;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+    border-color: var(--accent);
+  }
+  .project-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem; font-weight: 800;
+    color: rgba(0,0,0,0.05);
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    letter-spacing: -0.05em; line-height: 1;
+    user-select: none;
+  }
+  .project-employer {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.35rem; font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .project-story {
+    font-size: 0.9rem; color: var(--muted);
+    line-height: 1.75; font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+  .project-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .ptag {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px;
+    font-size: 0.72rem; font-weight: 500;
+    color: var(--muted);
+  }
+  .impact-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: rgba(232,68,10,0.08);
+    color: var(--accent);
+    font-size: 0.78rem; font-weight: 500;
+    padding: 0.35rem 0.8rem; border-radius: 2px;
+    margin-top: 1rem; border: 1px solid rgba(232,68,10,0.2);
+  }
+
+  /* ─── SKILLS ─── */
+  #skills {
+    background: #f0ece3;
+  }
+  .skills-columns {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  }
+  .skill-group {}
+  .skill-group-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+  .skill-bar-wrap {
+    width: 60px; height: 3px;
+    background: var(--border); border-radius: 2px;
+    overflow: hidden;
+  }
+  .skill-bar {
+    height: 100%; background: var(--accent);
+    border-radius: 2px;
+    animation: grow 1.2s ease forwards;
+  }
+  @keyframes grow { from { width: 0; } }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--ink); color: var(--paper); text-align: center; }
+  #contact .section-tag { justify-content: center; }
+  #contact .section-tag::after { display: none; }
+  #contact .section-tag::before {
+    content: ''; display: inline-block;
+    width: 40px; height: 1px; background: #e8a88a;
+  }
+  #contact .section-tag { color: #e8a88a; }
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800; letter-spacing: -0.04em;
+    line-height: 1; margin-top: 1rem;
+  }
+  .contact-sub {
+    font-size: 1rem; color: rgba(245,242,235,0.5);
+    margin: 1.5rem auto 3rem;
+    max-width: 500px; font-weight: 300; line-height: 1.7;
+  }
+  .contact-links {
+    display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 1rem 2rem;
+    border: 1px solid rgba(245,242,235,0.2);
+    border-radius: 3px;
+    color: var(--paper); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: background 0.2s, border-color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .contact-link:hover { background: rgba(245,242,235,0.08); border-color: rgba(245,242,235,0.4); }
+  .contact-link.primary { background: var(--accent); border-color: var(--accent); }
+  .contact-link.primary:hover { background: #cc3a07; border-color: #cc3a07; }
+
+  footer {
+    background: #060606; color: rgba(245,242,235,0.3);
+    text-align: center; padding: 2rem;
+    font-size: 0.8rem;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; gap: 3rem; }
+    section { padding: 4rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .skills-columns { grid-template-columns: 1fr 1fr; }
+    .tl-item { grid-template-columns: 80px 1fr; gap: 1rem; }
+  }
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 3.5rem 1.5rem; }
+    .skills-columns { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .tech-list { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NJ<span style="color:var(--accent)">.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-label">Senior Data Engineer</span>
+    <h1 class="hero-title">
+      Neel<br>Juvvana<span class="accent">pudi</span>
+    </h1>
+    <p class="hero-desc">
+      Building the infrastructure that turns raw data into real decisions — across finance, healthcare, and retail — at companies like Walmart and Morgan Stanley.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="mailto:neeljuvva@gmail.com" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-num">$120K</div>
+        <div class="stat-label">Annual Cost Savings</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-num">35%</div>
+        <div class="stat-label">Dev Time Reduction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2500+</div>
+        <div class="stat-label">Dashboard Users</div>
+      </div>
+      <div class="tech-list">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">SQL</span>
+        <span class="tech-tag">Snowflake</span>
+        <span class="tech-tag">GCP BigQuery</span>
+        <span class="tech-tag">Spark</span>
+        <span class="tech-tag">Databricks</span>
+        <span class="tech-tag">Azure ADF</span>
+        <span class="tech-tag">Airflow</span>
+        <span class="tech-tag">Kafka</span>
+        <span class="tech-tag">Terraform</span>
+        <span class="tech-tag">Power BI</span>
+        <span class="tech-tag">dbt</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bg-text">DATA</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <div class="section-tag">About Me</div>
+    <h2 class="section-title" style="color:var(--paper)">Engineer. Problem-solver.<br>Data storyteller.</h2>
+  </div>
+  <div class="about-grid">
+    <div>
+      <p class="about-bio">
+        I'm a Senior Data Engineer who thrives at the intersection of <strong>complex systems and business clarity</strong>. For over seven years, I've built the pipelines, warehouses, and platforms that power decisions at scale — from real-time fraud detection at healthcare firms to retail analytics at Walmart.
+      </p>
+      <p class="about-bio" style="margin-top:1.25rem">
+        Whether I'm architecting a Lakehouse on GCP, wiring up microservices in Node.js, or shaving $120K of compute costs off a Snowflake schema, I bring the same mindset: <strong>understand the business, then build something that lasts</strong>.
+      </p>
+      <p class="about-bio" style="margin-top:1.25rem">
+        I'm also a recognized <strong>Top Performer</strong> (Walmart) and an early adopter of AI-assisted development — having used GitHub Copilot and Claude Code to cut delivery cycles by ~35%.
+      </p>
+
+      <div class="cert-list">
+        <div class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">AWS Certified Data Analytics</div></div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">dbt Fundamentals & dbt Cloud Practitioner</div></div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">MultiCloud DevOps & AI — AWS, GCP, Amazon Bedrock, Claude & OpenAI</div></div></div>
+        <div class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">🏆 "Top Performer" — Walmart, Data Quality Innovation</div></div></div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">2023 – Present</div>
+        <div class="tl-content">
+          <div class="tl-role">Senior Data Engineer</div>
+          <div class="tl-company">Simbex / Riddell — Lebanon, NH</div>
+          <div class="tl-desc">Building scalable healthcare & sports analytics data platforms. Leading ETL pipelines, Power BI dashboards, and microservices for real-time data exchange.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2022 – 2023</div>
+        <div class="tl-content">
+          <div class="tl-role">Senior Data Engineer</div>
+          <div class="tl-company">Walmart — California</div>
+          <div class="tl-desc">Designed GCP-native data architectures for global retail analytics. Recognized as Top Performer for data quality innovation.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2020 – 2022</div>
+        <div class="tl-content">
+          <div class="tl-role">Full Stack Data Engineer</div>
+          <div class="tl-company">Morgan Stanley — New York</div>
+          <div class="tl-desc">Built Snowflake data pipelines and Power BI reports for Wealth Management, enabling 2,500+ users to transition to interactive dashboards.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2017 – 2019</div>
+        <div class="tl-content">
+          <div class="tl-role">Data Engineer</div>
+          <div class="tl-company">Ellucian · Simbex — NH</div>
+          <div class="tl-desc">Early career roles in ETL development, data validation, and analytics tooling across education and healthcare domains.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-tag">Featured Work</div>
+    <h2 class="section-title">Projects That<br>Moved the Needle</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-employer">Simbex / Riddell</div>
+      <div class="project-name">Healthcare Data Integration Platform</div>
+      <p class="project-story">Riddell's athlete health data was siloed — EHRs here, lab results there, claims data somewhere else. I built a unified ingestion layer on Databricks that pulled everything together in near-real time. Coaches and medical staff could finally see the full picture, not fragments.</p>
+      <div class="impact-badge">▲ Unified 3+ disparate health data sources</div>
+      <div class="project-tags">
+        <span class="ptag">Databricks</span>
+        <span class="ptag">Snowflake</span>
+        <span class="ptag">Azure ADF</span>
+        <span class="ptag">Power BI</span>
+        <span class="ptag">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-employer">Simbex / Riddell</div>
+      <div class="project-name">Financial Dashboard Automation</div>
+      <p class="project-story">Finance teams were drowning in manual spreadsheets. I automated end-to-end ETL pipelines feeding Power BI dashboards — streamlining budget forecasting, variance analysis, and capex tracking across two divisions. What took days now refreshes overnight, and optimizing Snowflake schemas saved the company ~$120K/year in compute.</p>
+      <div class="impact-badge">▲ ~$120K annual compute savings</div>
+      <div class="project-tags">
+        <span class="ptag">Snowflake</span>
+        <span class="ptag">Power BI</span>
+        <span class="ptag">Azure ADF</span>
+        <span class="ptag">PostgreSQL</span>
+        <span class="ptag">SQL</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">03</div>
+      <div class="project-employer">Simbex / Riddell</div>
+      <div class="project-name">AI-Assisted Development Pipeline</div>
+      <p class="project-story">I embedded GitHub Copilot and Claude Code directly into the daily data engineering workflow — using AI to generate Spark transformations, optimize SQL, and debug pipeline failures on the fly. The result: a 35% reduction in development time and faster shipping of new data products without sacrificing quality.</p>
+      <div class="impact-badge">▲ 35% reduction in development time</div>
+      <div class="project-tags">
+        <span class="ptag">Claude Code</span>
+        <span class="ptag">GitHub Copilot</span>
+        <span class="ptag">Spark</span>
+        <span class="ptag">PySpark</span>
+        <span class="ptag">SQL</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">04</div>
+      <div class="project-employer">Walmart</div>
+      <div class="project-name">Real-Time Retail Analytics on GCP</div>
+      <p class="project-story">Walmart needed a reference-grade GCP data platform — not just a working one, but one that other teams could build on. I defined architectures for BigQuery, Dataflow, Dataproc, and Cloud Composer, then built streaming pipelines with Kafka and Pub/Sub so that business intelligence ran on minutes-old data, not days-old exports.</p>
+      <div class="impact-badge">▲ Recognized Top Performer — Data Quality</div>
+      <div class="project-tags">
+        <span class="ptag">GCP BigQuery</span>
+        <span class="ptag">Dataflow</span>
+        <span class="ptag">Kafka</span>
+        <span class="ptag">Pub/Sub</span>
+        <span class="ptag">Delta Lake</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">05</div>
+      <div class="project-employer">Walmart</div>
+      <div class="project-name">P&L Reporting Automation</div>
+      <p class="project-story">Expense tracking and margin analysis across Walmart's business units was a patchwork. I partnered with finance stakeholders to consolidate sales and revenue data in Azure Synapse, then surfaced it through Power BI dashboards that automated P&L statements and cash flow analysis — giving leadership a single source of truth.</p>
+      <div class="impact-badge">▲ Automated P&L across multiple business units</div>
+      <div class="project-tags">
+        <span class="ptag">Azure Synapse</span>
+        <span class="ptag">ADF</span>
+        <span class="ptag">Power BI</span>
+        <span class="ptag">Tableau</span>
+        <span class="ptag">Spark/Scala</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">06</div>
+      <div class="project-employer">Morgan Stanley</div>
+      <div class="project-name">Wealth Management BI Platform</div>
+      <p class="project-story">30+ Power BI reports. 2,500 users. One migration. I rebuilt Morgan Stanley's Wealth Management reporting layer on Snowflake — tracking asset utilization, loan performance, and revenue KPIs in near real time. When the dashboards went live, finance leaders had the visibility to make strategic calls they'd never been able to make before.</p>
+      <div class="impact-badge">▲ 2,500+ users migrated to interactive dashboards</div>
+      <div class="project-tags">
+        <span class="ptag">Snowflake</span>
+        <span class="ptag">Power BI</span>
+        <span class="ptag">Azure Databricks</span>
+        <span class="ptag">Python</span>
+        <span class="ptag">Pandas</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">07</div>
+      <div class="project-employer">Morgan Stanley</div>
+      <div class="project-name">ML-Driven Product Recommendation Engine</div>
+      <p class="project-story">Product recommendations were rule-based and stale. I moved the system onto Databricks — ingesting big data from multiple sources, building ML models with Spark MLlib, and tracking experiments with MLflow. Accuracy improved meaningfully, and the new architecture could retrain and redeploy without engineering intervention.</p>
+      <div class="impact-badge">▲ Improved recommendation accuracy</div>
+      <div class="project-tags">
+        <span class="ptag">Databricks</span>
+        <span class="ptag">Spark MLlib</span>
+        <span class="ptag">MLflow</span>
+        <span class="ptag">Azure</span>
+        <span class="ptag">PySpark</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">08</div>
+      <div class="project-employer">Simbex (Early Career)</div>
+      <div class="project-name">Post-Store Opening Analytics Framework</div>
+      <p class="project-story">The ITT analytics team needed early signals to predict game impact after new retail locations opened. Using Google's Causal Impact Analysis model paired with SQL and Python pipelines, I built a framework that quantified new business generated — giving coaches data-backed confidence in their expansion decisions.</p>
+      <div class="impact-badge">▲ Causal Impact modeling for business prediction</div>
+      <div class="project-tags">
+        <span class="ptag">Python</span>
+        <span class="ptag">SQL</span>
+        <span class="ptag">Tableau</span>
+        <span class="ptag">Causal Impact</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-tag">Technical Expertise</div>
+    <h2 class="section-title">Tools & Technologies</h2>
+  </div>
+  <div class="skills-columns">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Cloud & Infrastructure</div>
+      <div class="skill-item">GCP (BigQuery, Dataflow, Dataproc)<div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></div>
+      <div class="skill-item">Microsoft Azure (ADF, Synapse, Databricks)<div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div></div>
+      <div class="skill-item">AWS (S3, Lambda, EC2, Redshift)<div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+      <div class="skill-item">Terraform / IaC<div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
+      <div class="skill-item">Apache Airflow<div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Data & Analytics</div>
+      <div class="skill-item">Snowflake<div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></div>
+      <div class="skill-item">Spark / PySpark / Scala<div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
+      <div class="skill-item">Databricks<div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
+      <div class="skill-item">dbt<div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
+      <div class="skill-item">Kafka / Pub/Sub (Streaming)<div class="skill-bar-wrap"><div class="skill-bar" style="width:84%"></div></div></div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Languages & BI</div>
+      <div class="skill-item">Python<div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></div>
+      <div class="skill-item">SQL (Postgres, T-SQL, KQL)<div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></div>
+      <div class="skill-item">Power BI<div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
+      <div class="skill-item">Tableau<div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
+      <div class="skill-item">Node.js / REST APIs<div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Let's Connect</div>
+  <h2 class="contact-title">Ready to build<br>something great?</h2>
+  <p class="contact-sub">Open to senior data engineering roles, consulting, and conversations about making data infrastructure actually work.</p>
+  <div class="contact-links">
+    <a href="mailto:neeljuvva@gmail.com" class="contact-link primary">
+      ✉ neeljuvva@gmail.com
+    </a>
+    <a href="tel:+19783280810" class="contact-link">
+      📞 +1 978-328-0810
+    </a>
+    <a href="https://linkedin.com/in/neeljuvvanapudi" target="_blank" class="contact-link">
+      💼 LinkedIn
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2025 Neel Juvvanapudi — Senior Data Engineer
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
